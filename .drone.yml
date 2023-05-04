@@ -2077,7 +2077,19 @@ platform:
   os: linux
 services: []
 steps:
-- image: grafana/drone-downstream
+- commands:
+  - git fetch origin main-synced
+  - git checkout main-synced
+  - git remote add grafana-mirror $${DOWNSTREAM_REPO}
+  - git push -f grafana-mirror main
+  environment:
+    DOWNSTREAM_REPO:
+      from_secret: grafana_downstream_repo
+  image: grafana/build-container:1.7.3
+  name: sync-grafana-mirror
+- depends_on:
+  - sync-grafana-mirror
+  image: grafana/drone-downstream
   name: trigger-enterprise-downstream
   settings:
     params:
@@ -6941,6 +6953,6 @@ kind: secret
 name: github_token
 ---
 kind: signature
-hmac: e819db5b752a99280213ed98baa12c0c27c87521c826580a8067c957579db98f
+hmac: 5cf61b7c07ae60fb8186bb0688bc3dcf065f7891160c40a39d5637b914c61636
 
 ...
