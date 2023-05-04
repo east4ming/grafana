@@ -49,6 +49,8 @@ func (s *QueryData) parseResponse(ctx context.Context, q *models.Query, res *htt
 		r = s.processExemplars(q, r)
 	}
 
+	r.Status = backend.Status(res.StatusCode)
+
 	return r
 }
 
