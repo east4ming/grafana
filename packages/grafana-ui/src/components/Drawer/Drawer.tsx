@@ -248,7 +248,7 @@ const getStyles = (theme: GrafanaTheme2) => {
       borderBottom: `1px solid ${theme.colors.border.weak}`,
     }),
     headerWithTabs: css({
-      borderbottom: `1px solid ${theme.colors.border.weak}`,
+      borderBottom: 'none',
     }),
     actions: css({
       position: 'absolute',
